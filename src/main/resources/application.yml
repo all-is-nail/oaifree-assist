@@ -1,0 +1,14 @@
+server:
+  port: 8080
+spring:
+  # 数据源配置
+  datasource:
+    url: jdbc:mysql://server-node:13306/oaifree-assist
+    username: oaifree-assist
+    password: oaifree-assist
+  # 模板引擎配置
+  thymeleaf:
+    cache: false # 关闭模板缓存（默认值：true）
+mybatis:
+  mapper-locations: classpath:mappers/*xml              # 指定Mybatis的Mapper文件
+  type-aliases-package: org.example.oaifreeassist.model # 指定Mybatis模型所在包路径
