@@ -1,4 +1,4 @@
-package org.example.oaifreeassist.dto;
+package org.example.oaifreeassist.model;
 
 import lombok.Data;
 

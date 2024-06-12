@@ -1,4 +1,4 @@
-package org.example.oaifreeassist.dto;
+package org.example.oaifreeassist.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

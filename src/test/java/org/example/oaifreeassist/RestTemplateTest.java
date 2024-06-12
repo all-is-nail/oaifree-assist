@@ -2,7 +2,7 @@ package org.example.oaifreeassist;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.oaifreeassist.dto.SharedTokenResponse;
+import org.example.oaifreeassist.model.SharedTokenResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
