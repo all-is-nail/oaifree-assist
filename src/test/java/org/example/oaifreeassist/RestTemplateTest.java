@@ -24,7 +24,6 @@ public class RestTemplateTest {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         headers.set("X-Requested-With", "XMLHttpRequest");
-        headers.set("User-Agent", "Apifox/1.0.0 (https://apifox.com)");
 
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("unique_name", "st-1718174067");
