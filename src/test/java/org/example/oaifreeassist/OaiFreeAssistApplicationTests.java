@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.oaifreeassist.dto.SharedTokenDTO;
 import org.example.oaifreeassist.dto.SharedTokenResponse;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
@@ -15,6 +16,10 @@ import java.util.Collections;
 
 @SpringBootTest
 class OaiFreeAssistApplicationTests {
+
+    @Autowired
+    private RestTemplate restTemplate;
+
     @Test
     void contextLoads() {
     }
@@ -54,7 +59,6 @@ class OaiFreeAssistApplicationTests {
         HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(formParams, headers);
 
         // 发送 POST 请求
-        RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<SharedTokenResponse> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, SharedTokenResponse.class);
 
         // 输出响应
