@@ -12,7 +12,10 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
+import java.util.Date;
 
 @SpringBootTest
 class OaiFreeAssistApplicationTests {
@@ -63,5 +66,71 @@ class OaiFreeAssistApplicationTests {
 
         // 输出响应
         System.out.println(new ObjectMapper().writeValueAsString(response.getBody()));
+    }
+
+    @Test
+    void testConvertTimeStamp2DataTime() {
+        long timestamp = Instant.now().getEpochSecond();
+        System.out.println("current timestamp is " + timestamp);
+        // 将时间戳转换为 LocalDateTime
+        ZoneId zone = ZoneId.systemDefault();
+        System.out.println("current zone is " + zone);
+        LocalDateTime dateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(timestamp), zone);
+        // 格式化日期时间
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDateTime = dateTime.format(formatter);
+        // 打印结果
+        System.out.println("从时间戳转换得到的日期时间: " + formattedDateTime);
+    }
+
+    @Test
+    void testTimeApi() {
+
+        // LocalDate
+        LocalDate localDate = LocalDate.now();
+        System.out.println("LocalDate: " + localDate);
+
+        // LocalTime
+        LocalTime localTime = LocalTime.now();
+        System.out.println("LocalTime: " + localTime);
+
+        // LocalDateTime
+        LocalDateTime localDateTime = LocalDateTime.now();
+        System.out.println("LocalDateTime: " + localDateTime);
+
+        // ZonedDateTime
+        ZonedDateTime zonedDateTime = ZonedDateTime.now();
+        System.out.println("ZonedDateTime: " + zonedDateTime);
+
+        // Instant
+        Instant instant = Instant.now();
+        System.out.println("Instant: " + instant);
+
+        // 获取时间戳
+        System.out.println("current timestamp: " + instant.getEpochSecond());
+
+        // 格式化 LocalDateTime
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDateTime = localDateTime.format(formatter);
+        System.out.println("Formatted LocalDateTime: " + formattedDateTime);
+
+        // 转换为 java.util.Date
+        Date date = Date.from(instant);
+        System.out.println("java.util.Date: " + date);
+
+        // 字符串类型日期转换成 LocalDateTime
+        String dateTimeStr1 = "2024-06-12T14:30:00";
+        // 使用 LocalDateTime.parse 方法
+        LocalDateTime dateTime1 = LocalDateTime.parse(dateTimeStr1);
+        // 打印结果
+        System.out.println("转换后的 LocalDateTime: " + dateTime1);
+
+        String dateTimeStr2 = "2024-06-12 14:30:00";
+        // 定义自定义格式
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        // 使用 DateTimeFormatter 进行解析
+        LocalDateTime dateTime2 = LocalDateTime.parse(dateTimeStr2, dateTimeFormatter);
+        // 打印结果
+        System.out.println("转换后的 LocalDateTime: " + dateTime2);
     }
 }
