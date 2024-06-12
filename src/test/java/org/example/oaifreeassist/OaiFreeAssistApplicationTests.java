@@ -26,7 +26,6 @@ class OaiFreeAssistApplicationTests {
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         headers.setAccept(Collections.singletonList(MediaType.ALL));
         headers.set("X-Requested-With", "XMLHttpRequest");
-        // headers.set("User-Agent", "Apifox/1.0.0 (https://apifox.com)");
 
         // 设置请求参数
         MultiValueMap<String, String> formParams = new LinkedMultiValueMap<>();
