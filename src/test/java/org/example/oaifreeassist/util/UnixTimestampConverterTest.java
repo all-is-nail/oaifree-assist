@@ -23,4 +23,10 @@ public class UnixTimestampConverterTest {
         LocalDateTime localDateTime = UnixTimestampConverter.convertToLocalDateTime(UNIX_TIMESTAMP);
         System.out.println("java.time.LocalDateTime 日期时间: " + localDateTime);
     }
+
+    @Test
+    public void testPlusTimestamp(){
+        LocalDateTime localDateTime = LocalDateTime.now().plusSeconds(1000L);
+        System.out.println("java.time.LocalDateTime 日期时间: " + localDateTime);
+    }
 }
