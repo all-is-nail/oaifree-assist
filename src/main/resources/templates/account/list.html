@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Account List</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Modal Bootstrap JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <style>
+        .btn-green {
+            background-color: green;
+            border-color: green;
+            color: white;
+        }
+
+        /*Added a CSS rule (white-space: nowrap) to the th and td elements to prevent line breaks.*/
+        th {
+            white-space: nowrap; /* Prevent line breaks */
+        }
+
+        td {
+            white-space: nowrap; /* Prevent line breaks */
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Accounts</h1>
+    <button class="btn btn-primary" onclick="showAccountForm()">Add New Account</button>
+    <table class="table table-bordered" id="accountTable">
+        <thead>
+        <tr>
+            <th>NO.</th>
+            <th>ID</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Valid Status</th>
+            <th>Create Time</th>
+            <th>Update Time</th>
+            <th colspan="2">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <div>
+        <span id="paginationInfo"></span>
+        <div>
+            <button id="prevPage" class="btn btn-secondary" onclick="loadAccounts(currentPage - 1)">Previous</button>
+            <button id="nextPage" class="btn btn-secondary" onclick="loadAccounts(currentPage + 1)">Next</button>
+        </div>
+    </div>
+</div>
+
+<!-- Account Form Modal -->
+<div class="modal" tabindex="-1" role="dialog" id="accountModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Account Form</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="accountForm">
+                    <input type="hidden" id="accountId">
+                    <!--                    <input type="hidden" name="_method" id="formMethod">-->
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" class="form-control" required/>
+                        <div class="invalid-feedback">Please provide a valid email.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" class="form-control" required/>
+                        <div class="invalid-feedback">Please provide a password.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="validStatus">Valid Status</label>
+                        <input type="number" id="validStatus" class="form-control" required/>
+                        <div class="invalid-feedback">Please provide a valid status.</div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="saveAccount()">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentPage = 1;
+
+    function loadAccounts(page) {
+        $.ajax({
+            url: '/api/oaiAccount',
+            data: {pageNum: page},
+            success: function (data) {
+                currentPage = data.current;
+                var total = data.total;
+                let size = data.size;
+
+                var hasPreviousPage = true;
+                var hasNextPage = true;
+                if (currentPage <= 1) {
+                    hasPreviousPage = false;
+                }
+                if (currentPage * size >= total) {
+                    hasNextPage = false;
+                }
+
+
+                $('#accountTable tbody').empty();
+
+                let startSerial = (currentPage - 1) * size + 1;
+                data.records.forEach((account, index) => {
+                    debugger
+                    $('#accountTable tbody').append(`
+                        <tr>
+                            <td>${startSerial + index}</td>
+                            <td>${account.id}</td>
+                            <td>${account.email}</td>
+                            <td>${account.password}</td>
+                            <td>${account.validStatus}</td>
+                            <td>${account.createTime}</td>
+                            <td>${account.updateTime}</td>
+                            <td>
+                                <button class="btn btn-secondary" onclick="showAccountForm('${account.id}')">Edit</button>
+                            </td>
+                            <td><button class="btn btn-danger" onclick="deleteAccount('${account.id}')">Delete</button></td>
+                        </tr>
+                    `);
+                });
+                $('#paginationInfo').text(`Page: ${data.current} of ${data.pages}`);
+
+                toggleButtonState('#prevPage', hasPreviousPage);
+                toggleButtonState('#nextPage', hasNextPage);
+            },
+            error: function (jqXHR) {
+                alert('Failed to load accounts: ' + jqXHR.responseText);
+            }
+        });
+    }
+
+    function toggleButtonState(buttonId, isEnabled) {
+        const button = $(buttonId);
+        if (isEnabled) {
+            button.prop('disabled', false);
+            button.addClass('btn-green');
+        } else {
+            button.prop('disabled', true);
+            button.removeClass('btn-green');
+        }
+    }
+
+    function showAccountForm(id) {
+        clearFormValidation();
+        // 如果存在主键，则为更新操作
+        if (id) {
+            $.ajax({
+                url: `/api/oaiAccount/${id}`,
+                success: function (data) {
+                    $('#accountId').val(data.id);
+                    $('#email').val(data.email);
+                    $('#password').val(data.password);
+                    $('#validStatus').val(data.validStatus);
+                    // $('#formMethod').val('PUT');
+                    $('#accountModal').modal('show');
+                },
+                error: function (jqXHR) {
+                    alert('Failed to load account: ' + jqXHR.responseText);
+                }
+            });
+        } else {
+            $('#accountId').val('');
+            $('#email').val('');
+            $('#password').val('');
+            $('#validStatus').val('');
+            // $('#formMethod').val('POST');
+            $('#accountModal').modal('show');
+        }
+    }
+
+    function saveAccount() {
+        if (!validateForm()) {
+            return;
+        }
+        const account = {
+            email: $('#email').val(),
+            password: $('#password').val(),
+            validStatus: $('#validStatus').val()
+        };
+        const id = $('#accountId').val();
+        // const method = $('#formMethod').val();
+        var method = 'POST';
+        if (id) {
+            method = 'PUT';
+            account.id = id;
+        }
+
+        $.ajax({
+            url: '/api/oaiAccount',
+            method: method,
+            contentType: 'application/json',
+            data: JSON.stringify(account),
+            success: function () {
+                $('#accountModal').modal('hide');
+                loadAccounts(currentPage);
+            },
+            error: function (jqXHR) {
+                alert(`Failed to ${method === 'PUT' ? 'update' : 'create'} account: ` + jqXHR.responseText);
+            }
+        });
+    }
+
+    /**
+     * 删除账户
+     *
+     * @param id
+     */
+    function deleteAccount(id) {
+        if (!confirm('Are you sure you want to delete this account?')) {
+            return;
+        }
+        debugger
+        $.ajax({
+            url: `/api/oaiAccount/${id}`,
+            method: 'DELETE',
+            success: function () {
+                loadAccounts(currentPage);
+            },
+            error: function (jqXHR) {
+                alert('Failed to delete account: ' + jqXHR.responseText);
+            }
+        });
+    }
+
+    function validateForm() {
+        let isValid = true;
+        $('#accountForm .form-control').each(function () {
+            if (!this.checkValidity()) {
+                $(this).addClass('is-invalid');
+                isValid = false;
+            } else {
+                $(this).removeClass('is-invalid');
+            }
+        });
+        return isValid;
+    }
+
+    function clearFormValidation() {
+        $('#accountForm .form-control').removeClass('is-invalid');
+    }
+
+    $(document).ready(function () {
+        loadAccounts(currentPage);
+    });
+</script>
+</body>
+</html>
