@@ -1,0 +1,14 @@
+.btn-green {
+    background-color: green;
+    border-color: green;
+    color: white;
+}
+
+/*Added a CSS rule (white-space: nowrap) to the th and td elements to prevent line breaks.*/
+th {
+    white-space: nowrap; /* Prevent line breaks */
+}
+
+td {
+    white-space: nowrap; /* Prevent line breaks */
+}
