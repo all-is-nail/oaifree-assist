@@ -1,5 +1,11 @@
+// 当前页码
 let currentPage = 1;
 
+/**
+ * 根据所在页查询账户信息
+ *
+ * @param page 当前页码
+ */
 function loadAccounts(page) {
     $.ajax({
         url: '/api/oaiAccount',
@@ -89,6 +95,9 @@ function showAccountForm(id) {
     }
 }
 
+/**
+ * 保存账户：更新/新增
+ */
 function saveAccount() {
     if (!validateForm()) {
         return;
