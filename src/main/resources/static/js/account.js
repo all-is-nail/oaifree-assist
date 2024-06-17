@@ -23,7 +23,6 @@ function loadAccounts(page) {
 
             let startSerial = (currentPage - 1) * size + 1;
             data.records.forEach((account, index) => {
-                debugger
                 $('#accountTable tbody').append(`
                         <tr>
                             <td>${startSerial + index}</td>
@@ -131,7 +130,6 @@ function deleteAccount(id) {
     if (!confirm('Are you sure you want to delete this account?')) {
         return;
     }
-    debugger
     $.ajax({
         url: `/api/oaiAccount/${id}`,
         method: 'DELETE',
