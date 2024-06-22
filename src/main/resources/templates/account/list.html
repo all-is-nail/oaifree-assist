@@ -23,7 +23,7 @@
             <th>Valid Status</th>
             <th>Create Time</th>
             <th>Update Time</th>
-            <th colspan="2">Actions</th>
+            <th colspan="4">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -76,5 +76,114 @@
         </div>
     </div>
 </div>
+
+<!-- Token Messages Modal -->
+<div class="modal" tabindex="-1" role="dialog" id="tokenModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Token Messages</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <button class="btn btn-primary" onclick="showTokenForm()">Add New Token</button>
+                <table class="table table-bordered" id="tokenTable">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Account ID</th>
+                        <th>Token Type</th>
+                        <th>Token Value</th>
+                        <th>Expire Time</th>
+                        <th>Create Time</th>
+                        <th>Update Time</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Token Form Modal -->
+<div class="modal" tabindex="-1" role="dialog" id="tokenFormModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Token Form</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="tokenForm">
+                    <input type="hidden" id="tokenId">
+                    <input type="hidden" id="tokenAccountId">
+                    <div class="form-group">
+                        <label for="tokenType">Token Type</label>
+                        <select id="tokenType" class="form-control" required>
+                            <option value="1">RT</option>
+                            <option value="2">AT</option>
+                        </select>
+                        <div class="invalid-feedback">Please select a token type.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="tokenValue">Token Value</label>
+                        <input type="text" id="tokenValue" class="form-control" required/>
+                        <div class="invalid-feedback">Please provide a token value.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="expireTime">Expire Time</label>
+                        <input type="date" id="expireTime" class="form-control" required/>
+                        <div class="invalid-feedback">Please provide an expire time.</div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="saveToken()">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
+<script>
+    function showAccountForm(id) {
+        clearFormValidation();
+        // 如果存在主键，则为更新操作
+        debugger
+        if (id) {
+            $.ajax({
+                url: `/api/oaiAccount/${id}`,
+                success: function (data) {
+                    $('#accountId').val(data.id);
+                    $('#email').val(data.email);
+                    $('#password').val(data.password);
+                    $('#validStatus').val(data.validStatus);
+                    // $('#formMethod').val('PUT');
+                    debugger
+                    $('#accountModal').modal('show');
+                },
+                error: function (jqXHR) {
+                    alert('Failed to load account: ' + jqXHR.responseText);
+                }
+            });
+        } else {
+            $('#accountId').val('');
+            $('#email').val('');
+            $('#password').val('');
+            $('#validStatus').val('');
+            // $('#formMethod').val('POST');
+            $('#accountModal').modal('show');
+        }
+    }
+</script>
 </html>

@@ -2,6 +2,9 @@ package org.example.oaifreeassist.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.example.oaifreeassist.entity.OaiAccount;
+import org.example.oaifreeassist.entity.OaiTokenManagement;
+
+import java.util.List;
 
 /**
 * @author m0v1
@@ -10,4 +13,5 @@ import org.example.oaifreeassist.entity.OaiAccount;
 */
 public interface OaiAccountService extends IService<OaiAccount> {
 
+    List<OaiTokenManagement> getTokensByAccountId(Long accountId);
 }

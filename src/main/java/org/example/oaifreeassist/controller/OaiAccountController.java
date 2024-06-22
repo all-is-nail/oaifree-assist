@@ -3,9 +3,12 @@ package org.example.oaifreeassist.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.example.oaifreeassist.entity.OaiAccount;
+import org.example.oaifreeassist.entity.OaiTokenManagement;
 import org.example.oaifreeassist.service.OaiAccountService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * OAI 账号信息(OaiAccount)表控制层
@@ -108,5 +111,11 @@ public class OaiAccountController {
         return ResponseEntity.ok(msg);
     }
 
+    @GetMapping("/{accountId}/tokens")
+    public ResponseEntity<List<OaiTokenManagement>> getTokenMessages(@PathVariable Long accountId) {
+        
+        List<OaiTokenManagement> tokens = oaiAccountService.getTokensByAccountId(accountId);
+        return ResponseEntity.ok(tokens);
+    }
 }
 

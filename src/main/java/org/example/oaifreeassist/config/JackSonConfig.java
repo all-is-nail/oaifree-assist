@@ -43,7 +43,6 @@ public class JackSonConfig {
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
         // Customize the LocalDateTime format
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
         SimpleModule simpleModule = new SimpleModule()
                 .addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern(DEFAULT_DATE_TIME_FORMAT)))
                 .addDeserializer(LocalDate.class, new LocalDateDeserializer(DateTimeFormatter.ofPattern(DEFAULT_DATE_FORMAT)))

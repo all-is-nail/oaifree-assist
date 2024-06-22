@@ -1,13 +1,11 @@
 package org.example.oaifreeassist.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * 账号令牌管理
@@ -46,19 +44,20 @@ public class OaiTokenManagement implements Serializable {
      * 到期时间
      */
     @TableField(value = "expire_time")
-    private Date expireTime;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDateTime expireTime;
 
     /**
      * 创建时间
      */
-    @TableField(value = "create_time")
-    private Date createTime;
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
+    private LocalDateTime createTime;
 
     /**
      * 更新时间
      */
-    @TableField(value = "update_time")
-    private Date updateTime;
+    @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
+    private LocalDateTime updateTime;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

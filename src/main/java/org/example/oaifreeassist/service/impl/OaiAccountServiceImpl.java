@@ -1,10 +1,17 @@
 package org.example.oaifreeassist.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.example.oaifreeassist.entity.OaiAccount;
+import org.example.oaifreeassist.entity.OaiTokenManagement;
 import org.example.oaifreeassist.mapper.OaiAccountMapper;
 import org.example.oaifreeassist.service.OaiAccountService;
+import org.example.oaifreeassist.service.OaiTokenManagementService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author m0v1
@@ -14,6 +21,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class OaiAccountServiceImpl extends ServiceImpl<OaiAccountMapper, OaiAccount> implements OaiAccountService {
 
+    @Autowired
+    private OaiTokenManagementService oaiTokenManagementService;
+
+    @Override
+    public List<OaiTokenManagement> getTokensByAccountId(Long accountId) {
+        LambdaQueryWrapper<OaiTokenManagement> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.eq(OaiTokenManagement::getAccountId, accountId);
+        return oaiTokenManagementService.list(queryWrapper);
+    }
 }
 
 
