@@ -51,7 +51,6 @@
             <div class="modal-body">
                 <form id="accountForm">
                     <input type="hidden" id="accountId">
-                    <!--                    <input type="hidden" name="_method" id="formMethod">-->
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input type="email" id="email" class="form-control" required/>
@@ -168,7 +167,6 @@
                     $('#email').val(data.email);
                     $('#password').val(data.password);
                     $('#validStatus').val(data.validStatus);
-                    // $('#formMethod').val('PUT');
                     debugger
                     $('#accountModal').modal('show');
                 },
@@ -181,7 +179,6 @@
             $('#email').val('');
             $('#password').val('');
             $('#validStatus').val('');
-            // $('#formMethod').val('POST');
             $('#accountModal').modal('show');
         }
     }
