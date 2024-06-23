@@ -70,9 +70,12 @@
                         <div class="invalid-feedback">Please provide a password.</div>
                     </div>
                     <div class="form-group">
-                        <label for="validStatus">Valid Status</label>
-                        <input type="number" id="validStatus" class="form-control" required>
-                        <div class="invalid-feedback">Please provide a valid status.</div>
+                        <label for="validStatus">Token Type</label>
+                        <select id="validStatus" class="form-control" required>
+                            <option value="0">invalid</option>
+                            <option value="1">valid</option>
+                        </select>
+                        <div class="invalid-feedback">Please select a token type.</div>
                     </div>
                 </form>
             </div>
