@@ -1,7 +1,6 @@
 package org.example.oaifreeassist.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -17,7 +16,6 @@ public class OaiAccount implements Serializable {
      * 主键
      */
     @TableId(type = IdType.AUTO)
-    @JsonSerialize(using = com.fasterxml.jackson.databind.ser.std.ToStringSerializer.class)
     private Long id;
 
     /**
