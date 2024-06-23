@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/tokens")
-public class TokenController {
+public class OaiTokenController {
 
     @Autowired
     private OaiTokenManagementService oaiTokenManagementService;
