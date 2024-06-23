@@ -12,3 +12,22 @@ th {
 td {
     white-space: nowrap; /* Prevent line breaks */
 }
+
+.modal-dialog {
+    max-width: 90%;
+}
+
+.modal-body {
+    overflow-x: auto;
+}
+
+.table-responsive {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.table th, .table td {
+    white-space: nowrap;
+}
