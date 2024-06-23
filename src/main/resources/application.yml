@@ -6,9 +6,6 @@ spring:
     url: jdbc:mysql://server-node:13306/oaifree-assist
     username: oaifree-assist
     password: oaifree-assist
-  # 模板引擎配置
-  thymeleaf:
-    cache: false # 关闭模板缓存（默认值：true）
 mybatis-plus:
   mapper-locations: classpath:mapper/*xml              # 指定Mybatis的Mapper文件
   # 指定 MyBatis 别名包扫描路径，用于给包中的类注册别名。注册后，在 Mapper 对应的 XML 文件中可以直接使用类名，无需使用全限定类名。
