@@ -64,12 +64,10 @@ function showAccountForm(id) {
         $.ajax({
             url: `/api/oaiAccount/${id}`,
             success: function (data) {
-                debugger
                 $('#accountId').val(data.id);
                 $('#email').val(data.email);
                 $('#password').val(data.password);
                 $('#validStatus').val(data.validStatus);
-                debugger
                 $('#accountModal').modal('show');
             },
             error: function (jqXHR) {
