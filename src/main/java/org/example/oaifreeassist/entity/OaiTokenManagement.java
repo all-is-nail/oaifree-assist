@@ -1,7 +1,6 @@
 package org.example.oaifreeassist.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -44,7 +43,6 @@ public class OaiTokenManagement implements Serializable {
      * 到期时间
      */
     @TableField(value = "expire_time")
-    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime expireTime;
 
     /**
