@@ -39,10 +39,10 @@ function loadAccounts(page) {
                             <td>${account.createTime}</td>
                             <td>${account.updateTime}</td>
                             <td>
-                                <button class="btn btn-secondary" onclick="showAccountForm('${account.id}')">Edit</button>
+                                <button class="btn btn-secondary" onclick="showAccountForm(${account.id})">Edit</button>
                             </td>
-                            <td><button class="btn btn-danger" onclick="deleteAccount('${account.id}')">Delete</button></td>
-                            <td><button class="btn btn-info" onclick="showTokens('${account.id}')">Show Token Messages</button></td>
+                            <td><button class="btn btn-danger" onclick="deleteAccount(${account.id})">Delete</button></td>
+                            <td><button class="btn btn-info" onclick="showTokens(${account.id})">Show Token Messages</button></td>
                         </tr>
                     `);
             });
@@ -55,6 +55,34 @@ function loadAccounts(page) {
             alert('Failed to load accounts: ' + jqXHR.responseText);
         }
     });
+}
+
+function showAccountForm(id) {
+    clearFormValidation();
+    // 如果存在主键，则为更新操作
+    if (id) {
+        $.ajax({
+            url: `/api/oaiAccount/${id}`,
+            success: function (data) {
+                debugger
+                $('#accountId').val(data.id);
+                $('#email').val(data.email);
+                $('#password').val(data.password);
+                $('#validStatus').val(data.validStatus);
+                debugger
+                $('#accountModal').modal('show');
+            },
+            error: function (jqXHR) {
+                alert('Failed to load account: ' + jqXHR.responseText);
+            }
+        });
+    } else {
+        $('#accountId').val('');
+        $('#email').val('');
+        $('#password').val('');
+        $('#validStatus').val('');
+        $('#accountModal').modal('show');
+    }
 }
 
 function toggleButtonState(buttonId, isEnabled) {
@@ -83,7 +111,6 @@ function saveAccount() {
         validStatus: $('#validStatus').val()
     };
     const id = $('#accountId').val();
-    // const method = $('#formMethod').val();
     var method = 'POST';
     if (id) {
         method = 'PUT';
