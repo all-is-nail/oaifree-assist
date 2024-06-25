@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.oaifreeassist.mapper.OaiSharedManagementMapper">
+
+    <resultMap id="BaseResultMap" type="org.example.oaifreeassist.entity.OaiSharedManagement">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="tokenId" column="token_id" jdbcType="BIGINT"/>
+        <result property="limitId" column="limit_id" jdbcType="BIGINT"/>
+        <result property="expirationTime" column="expiration_time" jdbcType="TIMESTAMP"/>
+        <result property="uniqueName" column="unique_name" jdbcType="VARCHAR"/>
+        <result property="shareToken" column="share_token" jdbcType="VARCHAR"/>
+        <result property="isResetLimit" column="is_reset_limit" jdbcType="TINYINT"/>
+        <result property="isIsolateChat" column="is_isolate_chat" jdbcType="TINYINT"/>
+        <result property="validStatus" column="valid_status" jdbcType="TINYINT"/>
+        <result property="isTempChat" column="is_temp_chat" jdbcType="TINYINT"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,token_id,limit_id,
+        expiration_time,unique_name,share_token,
+        is_reset_limit,is_isolate_chat,valid_status,
+        is_temp_chat,create_time,update_time
+    </sql>
+</mapper>
