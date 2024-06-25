@@ -1,16 +1,18 @@
 package org.example.oaifreeassist.entity;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.example.oaifreeassist.entity.base.OaiBase;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * OAI 账号信息
  */
 @TableName(value = "oai_account")
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class OaiAccount extends OaiBase implements Serializable {
 

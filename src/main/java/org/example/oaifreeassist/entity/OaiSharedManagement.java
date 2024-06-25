@@ -3,6 +3,7 @@ package org.example.oaifreeassist.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.example.oaifreeassist.entity.base.OaiBase;
 
 import java.io.Serializable;
@@ -14,6 +15,7 @@ import java.util.Date;
  * @TableName oai_shared_management
  */
 @TableName(value = "oai_shared_management")
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class OaiSharedManagement extends OaiBase implements Serializable {
 

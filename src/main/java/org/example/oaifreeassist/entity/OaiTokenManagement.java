@@ -1,7 +1,9 @@
 package org.example.oaifreeassist.entity;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.example.oaifreeassist.entity.base.OaiBase;
 
 import java.io.Serializable;
@@ -13,6 +15,7 @@ import java.time.LocalDateTime;
  * @TableName oai_token_management
  */
 @TableName(value = "oai_token_management")
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class OaiTokenManagement extends OaiBase implements Serializable {
 
