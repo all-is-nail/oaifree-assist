@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 import org.example.oaifreeassist.entity.base.OaiBase;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * 共享账号管理
@@ -35,7 +35,7 @@ public class OaiSharedManagement extends OaiBase implements Serializable {
      * 到期时间
      */
     @TableField(value = "expiration_time")
-    private Date expirationTime;
+    private LocalDateTime expirationTime;
 
     /**
      * 共享账号名称
