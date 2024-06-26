@@ -10,4 +10,5 @@ import org.example.oaifreeassist.entity.OaiSharedManagement;
  */
 public interface OaiSharedManagementService extends IService<OaiSharedManagement> {
 
+    void renewOaiSharedManagement(Long sharedTokenId);
 }

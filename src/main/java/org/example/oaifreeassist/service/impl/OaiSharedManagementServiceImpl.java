@@ -1,5 +1,7 @@
 package org.example.oaifreeassist.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.example.oaifreeassist.entity.OaiSharedManagement;
 import org.example.oaifreeassist.mapper.OaiSharedManagementMapper;
@@ -15,6 +17,10 @@ import org.springframework.stereotype.Service;
 public class OaiSharedManagementServiceImpl extends ServiceImpl<OaiSharedManagementMapper, OaiSharedManagement>
         implements OaiSharedManagementService {
 
+    public void renewOaiSharedManagement(Long sharedTokenId) {
+        LambdaQueryWrapper<OaiSharedManagement> sharedTokenQueryWrapper = Wrappers.lambdaQuery(OaiSharedManagement.class);
+
+    }
 }
 
 

@@ -43,6 +43,7 @@ public class SharedTokenManagement {
         }
 
         oaiSharedManagementService.list(queryWrapper).forEach(oaiSharedManagement -> {
+            Long oaiSharedManagementId = oaiSharedManagement.getId();
             Long tokenId = oaiSharedManagement.getTokenId();
             LambdaQueryWrapper<OaiTokenManagement> oaiTokenManagementLambdaQueryWrapper = Wrappers.lambdaQuery(OaiTokenManagement.class);
             oaiTokenManagementLambdaQueryWrapper.eq(OaiTokenManagement::getId, tokenId)
@@ -66,6 +67,10 @@ public class SharedTokenManagement {
                 if (CollectionUtils.isNotEmpty(oaiRefreshToken)) {
                     String refreshTokenValue = oaiRefreshToken.get(0).getTokenValue();
                     String newAccessToken = accessTokenService.getAccessTokenByRefreshToken(refreshTokenValue);
+                    // 更新 ac
+
+                    // 续期
+                    oaiSharedManagementService.renewOaiSharedManagement(oaiSharedManagementId);
 
                 }
                 // |____ 不存在，不处理当前 st 的续期
