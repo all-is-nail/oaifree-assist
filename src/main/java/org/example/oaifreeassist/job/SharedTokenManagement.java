@@ -45,21 +45,17 @@ public class SharedTokenManagement {
         oaiSharedManagementService.list(queryWrapper).forEach(oaiSharedManagement -> {
             Long oaiSharedManagementId = oaiSharedManagement.getId();
             Long tokenId = oaiSharedManagement.getTokenId();
-            LambdaQueryWrapper<OaiTokenManagement> oaiTokenManagementLambdaQueryWrapper = Wrappers.lambdaQuery(OaiTokenManagement.class);
-            oaiTokenManagementLambdaQueryWrapper.eq(OaiTokenManagement::getId, tokenId)
-                    .gt(OaiTokenManagement::getExpireTime, LocalDateTime.now());
+
             // 判断对应的 ac 是否处于有效期
-            long validOaiAccessTokenCount = oaiTokenManagementService.count(oaiTokenManagementLambdaQueryWrapper);
+            OaiTokenManagement accessTokenInfo = oaiTokenManagementService.getById(tokenId);
             // |__ if ac 有效，则执行 st 续期
-            if (validOaiAccessTokenCount > 0) {
+            if (accessTokenInfo != null && accessTokenInfo.getExpireTime().isAfter(LocalDateTime.now())) {
+                oaiSharedManagementService.renewoaisharedmanagement(oaiSharedManagementId, accessTokenInfo.getTokenValue());
 
                 // |__ not 查询 ac 对应的账户是否存在 rt
             } else {
-                OaiTokenManagement oaiTokenManagement = oaiTokenManagementService.getById(tokenId);
-                Long accountId = oaiTokenManagement.getAccountId();
-
                 LambdaQueryWrapper<OaiTokenManagement> oaiTokenManagementWrapper = Wrappers.lambdaQuery(OaiTokenManagement.class);
-                oaiTokenManagementWrapper.eq(OaiTokenManagement::getAccountId, accountId).eq(OaiTokenManagement::getTokenType, 1);
+                oaiTokenManagementWrapper.eq(OaiTokenManagement::getAccountId, accessTokenInfo.getAccountId()).eq(OaiTokenManagement::getTokenType, 1);
                 List<OaiTokenManagement> oaiRefreshToken = oaiTokenManagementService.list(oaiTokenManagementWrapper);
 
                 // |____ 存在
@@ -70,7 +66,7 @@ public class SharedTokenManagement {
                     // 更新 ac
 
                     // 续期
-                    oaiSharedManagementService.renewOaiSharedManagement(oaiSharedManagementId);
+                    oaiSharedManagementService.renewoaisharedmanagement(oaiSharedManagementId, null);
 
                 }
                 // |____ 不存在，不处理当前 st 的续期
