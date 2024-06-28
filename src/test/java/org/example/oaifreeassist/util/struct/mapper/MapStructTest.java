@@ -24,6 +24,6 @@ public class MapStructTest {
     @Data
     static class DemoDTO {
         private String demoName;
-        private Integer demoSize;
+        private String demoSize;// 类型与 source 中不一致
     }
 }
