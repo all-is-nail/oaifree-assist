@@ -30,7 +30,7 @@ public class SharedTokenManagement {
     /**
      * 每天 23:23 对 shared token 执行续期操作
      */
-    @Scheduled(cron = "23 30 * * *")
+    @Scheduled(cron = "0 30 23 * * *")
     public void renewSharedToken() {
         log.info("Renew shared token");
         // TODO
