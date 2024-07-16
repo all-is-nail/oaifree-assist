@@ -36,7 +36,8 @@ public class SharedTokenManagement {
         // TODO
         // 查询处于有效期的 st
         LambdaQueryWrapper<OaiSharedManagement> queryWrapper = Wrappers.lambdaQuery(OaiSharedManagement.class);
-        queryWrapper.gt(OaiSharedManagement::getExpirationTime, LocalDateTime.now());
+        LocalDateTime now = LocalDateTime.now();
+        queryWrapper.gt(OaiSharedManagement::getExpirationTime, now);
         long validOaiShareTokenCount = oaiSharedManagementService.count(queryWrapper);
         if (validOaiShareTokenCount < 1) {
             return;
@@ -49,7 +50,7 @@ public class SharedTokenManagement {
             // 判断对应的 ac 是否处于有效期
             OaiTokenManagement accessTokenInfo = oaiTokenManagementService.getById(tokenId);
             // |__ if ac 有效，则执行 st 续期
-            if (accessTokenInfo != null && accessTokenInfo.getExpireTime().isAfter(LocalDateTime.now())) {
+            if (accessTokenInfo != null && accessTokenInfo.getExpireTime().isAfter(now)) {
                 oaiSharedManagementService.renewoaisharedmanagement(oaiSharedManagementId, accessTokenInfo.getTokenValue());
 
                 // |__ not 查询 ac 对应的账户是否存在 rt
