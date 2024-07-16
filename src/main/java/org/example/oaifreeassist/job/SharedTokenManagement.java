@@ -28,7 +28,7 @@ public class SharedTokenManagement {
     private final AccessTokenService accessTokenService;
 
     /**
-     * 每天 23:23 对 shared token 执行续期操作
+     * 每天 23:30 对 shared token 执行续期操作
      */
     @Scheduled(cron = "0 30 23 * * *")
     public void renewSharedToken() {
